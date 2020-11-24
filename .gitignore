@@ -1,0 +1,4 @@
+env/*
+readme.md
+*.pyc
+__pycache__/*
