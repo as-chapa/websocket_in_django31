@@ -1,4 +1,4 @@
 env/*
-readme.md
+self_memo.md
 *.pyc
 */__pycache__/
