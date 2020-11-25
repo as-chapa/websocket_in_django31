@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from websocket.urls import websocket
-from users import views
+from users import views as users_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    websocket("ws/", views.websocket_view),
+    websocket("ws/", users_views.websocket_view),
     path('users/', include('users.urls')),
 ]

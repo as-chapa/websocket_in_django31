@@ -7,5 +7,10 @@ class IndexView(TemplateView):
 
 async def websocket_view(socket):
     await socket.accept()
-    await socket.send_text('hello')
-    await socket.close()
+    while True:
+        message = await socket.receive_text()
+        message = 'add_' + message
+        await socket.send_text(message)
+    # await socket.send_text(str(socket.headers))
+    # await socket.send_text('hello')
+    # await socket.close()
