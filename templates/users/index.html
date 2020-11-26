@@ -7,6 +7,7 @@
 </head>
 <body>
     Async Test
+    <textarea id="messageTextArea" rows="100" cols="50"></textarea>
 </body>
 <script>
     let socket = new WebSocket('ws://localhost:8000/ws/');
@@ -16,6 +17,10 @@
             socket.send('hello');
         }, 1000);
     };
+    socket.onmessage = (message) => {
+        // 出力areaにメッセージを表示する。
+        messageTextArea.value += "Recieve From Server => " + message.data + "\n";
+    }
     socket.onclose = socket.onerror = () => {
         clearInterval(timer);
     };

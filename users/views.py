@@ -1,3 +1,5 @@
+import random, time 
+
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 
@@ -7,10 +9,21 @@ class IndexView(TemplateView):
 
 async def websocket_view(socket):
     await socket.accept()
-    while True:
-        message = await socket.receive_text()
-        message = 'add_' + message
-        await socket.send_text(message)
+    sum = 0
+    await socket.receive_text()
+    await socket.send_text("socket start")
+    time.sleep(5)
+    while sum < 100:
+        sum += random.randint(0,10)
+        time.sleep(1)
+        await socket.send_text(str(sum))
+    await socket.send_text(str(socket.headers))
+    await socket.send_text("socket closed")
+    await socket.close()
+    # while True:
+    #     message = await socket.receive_text()
+    #     message = 'add_' + message
+    #     await socket.send_text(message)
     # await socket.send_text(str(socket.headers))
     # await socket.send_text('hello')
     # await socket.close()
