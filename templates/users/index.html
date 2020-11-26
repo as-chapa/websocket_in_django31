@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>WebSocketのテスト</title>
 </head>
 <body>
-    Async Test
-    <textarea id="messageTextArea" rows="100" cols="50"></textarea>
+    <div><textarea name="client_message" id="client_message" cols="30" rows="10"></textarea></div>
+    <div><button id="btn">サーバにメッセージを送信する</button></div>
+    <div id="messageTextArea" rows="100" cols="50"></div>
 </body>
 <script>
     let socket = new WebSocket('ws://localhost:8000/ws/');
     let timer = null;
     socket.onopen = () => {
-        timer = setInterval(() => {
-            socket.send('hello');
-        }, 1000);
+        // timer = setInterval(() => {
+        //     socket.send('hello');
+        // }, 1000);
     };
     socket.onmessage = (message) => {
         // 出力areaにメッセージを表示する。
-        messageTextArea.value += "Recieve From Server => " + message.data + "\n";
+        document.getElementById("messageTextArea").innerHTML += "Recieve From Server => " + message.data + "<br>";
     }
     socket.onclose = socket.onerror = () => {
         clearInterval(timer);
     };
+
+    const btn = document.getElementById('btn');
+    btn.addEventListener('click', () => {
+        const client_message = document.getElementById('client_message').value;
+        socket.send(client_message);
+    });
 </script>
 </html>
