@@ -21,6 +21,7 @@ from users import views as users_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     websocket("ws/", users_views.websocket_view),
     path('users/', include('users.urls')),
 ]

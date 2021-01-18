@@ -1,0 +1,16 @@
+{% extends 'users/base.html' %}
+{% block header %}
+<div class="jumbotron">
+    <h1 class="display-4">haku-mai chat tool</h1>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">ログイン</button>
+    </form>
+</div>
+{% endblock content %}

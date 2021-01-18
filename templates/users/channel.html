@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocketのテスト</title>
+</head>
+<body>
+    <div><textarea name="client_message" id="client_message" cols="30" rows="10"></textarea></div>
+    <div><button id="btn">サーバにメッセージを送信する</button></div>
+    <div id="messageTextArea" rows="100" cols="50"></div>
+</body>
+<script>
+    let socket = new WebSocket('ws://localhost:8000/ws/');
+    let timer = null;
+    socket.onopen = () => {
+        // timer = setInterval(() => {
+        //     socket.send('hello');
+        // }, 1000);
+    };
+    socket.onmessage = (message) => {
+        // 出力areaにメッセージを表示する。
+        document.getElementById("messageTextArea").innerHTML += "Recieve From Server => " + message.data + "<br>";
+    }
+    socket.onclose = socket.onerror = () => {
+        clearInterval(timer);
+    };
+
+    const btn = document.getElementById('btn');
+    btn.addEventListener('click', () => {
+        const client_message = document.getElementById('client_message').value;
+        document.getElementById("messageTextArea").innerHTML += "Send From {{user.username}} => " + client_message + "<br>";
+        socket.send(client_message);
+    });
+</script>
+</html>

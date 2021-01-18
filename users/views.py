@@ -2,12 +2,19 @@ import random, time
 
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 socket_list = {}
 
-class IndexView(TemplateView):
+
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "users/index.html"
+
+
+class ChannelView(LoginRequiredMixin, TemplateView):
+    template_name = "users/channel.html"
+
 
 async def websocket_view(socket):
     await socket.accept()
